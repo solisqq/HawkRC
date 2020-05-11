@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"tuple": "cpp",
+			"utility": "cpp",
+			"ios": "cpp",
+			"istream": "cpp",
+			"ostream": "cpp",
+			"xstring": "cpp",
+			"vector": "cpp",
+			"xutility": "cpp"
+		}
+	}
+}
