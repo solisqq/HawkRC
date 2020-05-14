@@ -9,7 +9,6 @@ volatile int channel_length[8] = {0,0,0,0,0,0,0,0};
 unsigned long CPPM_TimePrevious = 0;
 volatile bool inactive = true;
 int errorsCount = 0;
-uint8_t RSSI_PIN = 3;
 
 void CPPM_ISR()
 {
