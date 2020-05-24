@@ -161,6 +161,14 @@ public:
 		pushBack(b);
         return this;
 	}
+    Type& operator[](unsigned int index) {
+        if(index>count()) return last()->val;
+        Node* current = top();
+        for(int i=0; i<index; i++) 
+            current = current->next;
+        
+        return current->val;
+    }
 };
 
 #endif

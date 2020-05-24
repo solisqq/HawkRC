@@ -6,17 +6,21 @@
 #include "HCallback.h"
 
 class HSystem {
-public:
     List<HProcess*> processes;
+public:
     HSystem(){}
     void addProcess(HProcess *processToAdd, unsigned long frequency, String name) {
         processes.pushBack(processToAdd);
-        processToAdd->start(frequency, name)
+        processToAdd->start(frequency, name);
     }
     void operate(){
         for(List<HProcess*>::Node* it=processes.top(); it!=nullptr; it=it->next) {
-            if(Signals::RXDataReady.wasEmited()) {
-                it->val->OnRXRead(Signals::RXDataReady.getValue())
+            it->val->run();
+            if(Signals::RXAxisReady.wasEmited()) {
+                it->val->OnRXAxisRead(Signals::RXAxisReady.getValue());
+            }
+            if(Signals::RXSwitchesReady.wasEmited()) {
+                it->val->OnRXSwitchesRead(Signals::RXSwitchesReady.getValue());
             }
         }
     }

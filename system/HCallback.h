@@ -7,14 +7,17 @@
 
 class Signals {
 public:
-    static HSignal<C4DPoint> RXDataReady;
+    static HSignal<C4DPoint<float>> RXAxisReady;
+    static HSignal<C4DPoint<uint8_t>> RXSwitchesReady;
 };
-HSignal<C4DPoint> Signals::RXDataReady; 
+HSignal<C4DPoint<float>> Signals::RXAxisReady;
+HSignal<C4DPoint<uint8_t>> Signals::RXSwitchesReady;
 
 
 class HCallback {
 public:
-    virtual void OnRXRead(C4DPoint& channels){}
+    virtual void OnRXAxisRead(C4DPoint<float>& channels){}
+    virtual void OnRXSwitchesRead(C4DPoint<uint8_t>& channels){}
 };
 
 #endif

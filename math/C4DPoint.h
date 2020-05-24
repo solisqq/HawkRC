@@ -8,12 +8,13 @@ class C4DPoint {
     Type z;
     Type a;
 public:
-    CPoint():x(0),y(0),z(0),a(0){}
-    CPoint(Type x, Type y, Type z, Type a): x(x), y(y), z(z), a(a){}
+    C4DPoint():x(0),y(0),z(0),a(0){}
+    C4DPoint(Type x, Type y, Type z, Type a): x(x), y(y), z(z), a(a){}
     Type X(){return x;}
     Type Y(){return y;}
-    Type operator[](int index) {
-        if(index>3 || index<0) return 0;
+    Type& operator[](int index) {
+        if(index<0) return x;
+        if(index>3) return a;
         switch(index) {
             case 0: return x;
             break;
