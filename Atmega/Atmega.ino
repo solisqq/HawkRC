@@ -44,7 +44,7 @@ void loop(){
             state=false;
         }
         frskyD4R.sendData();
-        Serial.write('\n');
+        Serial.write(static_cast<char>(127));
     }
     if(Serial.available()) {
         if(FCConnection==false) {

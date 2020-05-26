@@ -14,7 +14,7 @@ class HReceiver: public HProcess {
 public:
     HReceiver();
     virtual void init();
-    virtual void OnRXAxisRead(C4DPoint<float>& channels);
+    virtual void OnRXAxisRead(C4DPoint<int8_t>& channels);
     virtual void OnRXSwitchesRead(C4DPoint<uint8_t>& channels);
 protected:
     virtual void work();

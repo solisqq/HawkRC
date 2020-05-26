@@ -19,6 +19,19 @@ public:
         static int8_t MID_STATE;
         static int8_t MID_HIGH_STATE;
         static int8_t MID_LOW_STATE;
+        static int8_t DEAD_ZONE;
+        static uint8_t LOW_RSI_SIGNAL;
+
+        static int8_t MAX_VAL;
+        static int8_t MIN_VAL;
+    };
+    class Filtering {
+    public:
+        class Receiver {
+            public:
+            static float axisSmoothing;
+            static float yawMult;
+        };
     };
 };
 
@@ -30,6 +43,14 @@ int8_t HSettings::RadioValues::MID_STATE = 0;
 int8_t HSettings::RadioValues::MID_HIGH_STATE = 5;
 int8_t HSettings::RadioValues::MID_LOW_STATE = -5;
 int8_t HSettings::RadioValues::HIGH_STATE = 90;
+int8_t HSettings::RadioValues::DEAD_ZONE = 2;
+uint8_t HSettings::RadioValues::LOW_RSI_SIGNAL = 0;
+
+int8_t HSettings::RadioValues::MAX_VAL = 105;
+int8_t HSettings::RadioValues::MIN_VAL = -105;
+
+float HSettings::Filtering::Receiver::axisSmoothing = 0.98;
+float HSettings::Filtering::Receiver::yawMult = 0.01;
 
 
 

@@ -1,5 +1,5 @@
 #include "Receiver.h"
-
+#include "Arduino.h"
 Receiver::Receiver(){}
 
 void Receiver::init(uint8_t interruptPin, uint8_t RSSIPin) {
@@ -20,8 +20,12 @@ bool Receiver::isActive()
 
 void Receiver::sendData() {
     String toRet = "";
-    for(int i=0; i<8; i++)
-        Serial.write((char)((channel_length[i]-1500)/5));
+    for(int i=0; i<8; i++){
+        int value = (channel_length[i]-1500);
+        //if(value==0) Serial.write((char)0);
+        //else Serial.write((char)(value/5));
+        Serial.write((char)(value/5));
+    }
     Serial.write((char)getRSSI());
 }
 

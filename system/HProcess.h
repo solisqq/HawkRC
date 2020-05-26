@@ -4,19 +4,21 @@
 #include "C:/Users/kamil/Documents/Programming/HawkRC/system/HCallback.h"
 
 class HProcess: public HCallback {
-    USTimer timer;
+    MSTimer ptimer;
     String processName;
 public:
     HProcess() {}
     void start(unsigned long frequency, String name) {
-        timer.start(1000000/frequency);
+        ptimer.start(1000/frequency);
         processName = name;
         init();
     }
     void run() {
-        if(timer.isTimeout()) 
+        if(ptimer.isTimeout()){ 
             work();
+        }
     }
+    bool isReadyToHandle() {return ptimer.isTimeout();}
     String getName() {return processName;}
 protected:
     virtual void work()=0;

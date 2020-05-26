@@ -2,18 +2,17 @@
 #ifndef FILTERABLEVALUE_H
 #define FILTERABLEVALUE_H
 
-#include "Filter.h"
-#include "../structures/List.h"
-#include "../infac/AllowPrint.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Filter/Filter.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/structures/List.h"
 
 template <class Type>
-class FilterableValue: public AllowPrint {
+class FilterableValue {
 public:
 	Type value;
 	FilterableValue(){}
 	List<Filter<Type>*> filters;
 	void update(Type val) {
-		if(filters.Count==0) {
+		if(filters.count()==0) {
 			value = val;
 			return;
 		}
@@ -41,7 +40,6 @@ public:
 	void addFilter(List<Filter<Type>*> filter) {
 		filters.Union(filter);
 	}
-	virtual String toString() {return static_cast<String>(value);}
 };
 
 #endif

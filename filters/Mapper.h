@@ -2,10 +2,7 @@
 #ifndef MAPPER_H
 #define MAPPER_H
 
-#include "../infac/Filter.h"
-#include "../structures/List.h"
-#include "../algorithms/algorithms.h"
-#include "../utilities/Output/Output.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Filter/Filter.h"
 
 template<class Type>
 class Mapper : public Filter<Type> {

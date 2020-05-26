@@ -46,15 +46,15 @@ protected:
     }
 public:
     USTimer():CTimer() {}
-    virtual void start(unsigned int durationInUS) {
-        duration = durationInUS;
+    virtual void start(unsigned int durationInMS) {
+        duration = durationInMS;
         restart();
     }
     virtual bool isTimeout() {
         if(timeout==0) 
             return false;
 
-        if(micros()>timeout) {
+        if(micros()>timeout){
             restart();
             return true;
         }

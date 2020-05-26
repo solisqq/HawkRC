@@ -2,7 +2,7 @@
 #ifndef SIMPLEIR_H
 #define SIMPLEIR_H
 
-#include "../infac/Filter.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Filter/Filter.h"
 
 template<class Type>
 class SimpleIR : public Filter<Type> {
