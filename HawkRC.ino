@@ -9,8 +9,8 @@ HSteering steering;
 
 void setup(){
     Serial.begin(115200);
-    hsystem.addProcess(&rx, 20, "Receiver");
-    hsystem.addProcess(&steering, 20, "Steering");
+    hsystem.addProcess(&rx, 50, "Receiver");
+    hsystem.addProcess(&steering, 50, "Steering");
 }
 void loop(){
     hsystem.operate();

@@ -1,9 +1,8 @@
 #ifndef HPROCESS_H
 #define HPROCESS_H
 #include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Timer/Timer.h"
-#include "C:/Users/kamil/Documents/Programming/HawkRC/system/HCallback.h"
 
-class HProcess: public HCallback {
+class HProcess {
     MSTimer ptimer;
     String processName;
 public:
@@ -14,9 +13,8 @@ public:
         init();
     }
     void run() {
-        if(ptimer.isTimeout()){ 
+        if(ptimer.isTimeout())
             work();
-        }
     }
     bool isReadyToHandle() {return ptimer.isTimeout();}
     String getName() {return processName;}

@@ -49,8 +49,8 @@ uint8_t HSettings::RadioValues::LOW_RSI_SIGNAL = 0;
 int8_t HSettings::RadioValues::MAX_VAL = 105;
 int8_t HSettings::RadioValues::MIN_VAL = -105;
 
-float HSettings::Filtering::Receiver::axisSmoothing = 0.98;
-float HSettings::Filtering::Receiver::yawMult = 0.01;
+float HSettings::Filtering::Receiver::axisSmoothing = 0.87;
+float HSettings::Filtering::Receiver::yawMult = 0.15;
 
 
 

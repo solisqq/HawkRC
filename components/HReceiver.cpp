@@ -5,8 +5,6 @@ void HReceiver::init() {
     rxSerial.println("FC ON");
     Signals::RXConnectionSwitchState.emit(false);
 }
-void HReceiver::OnRXAxisRead(C4DPoint<int8_t>& channels){}
-void HReceiver::OnRXSwitchesRead(C4DPoint<uint8_t>& channels) {}
 
 void HReceiver::work() {
     List<int8_t> values;
