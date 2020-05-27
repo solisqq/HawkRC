@@ -4,8 +4,7 @@
 #define Butterworth_ORDER 4
 
 #include "stock/Iir.h"
-#include "../infac/Filter.h"
-#include "../main/Settings.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Filter/Filter.h"
 
 template<class Type>
 class ButterworthLP: public Filter<Type> {

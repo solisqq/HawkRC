@@ -23,7 +23,7 @@ void HSteering::OnRXAxisRead(C4DPoint<int8_t> channels){
     Signals::StearingReady.emit(C4DPoint<float>(throttle.value, yaw.value, pitch.value, roll.value));
 }
 void HSteering::OnStearingRead(C4DPoint<float> channels) {
-    Serial.println(channels.toString());
+    //Serial.println(channels.toString());
 }
 
 

@@ -4,6 +4,7 @@
 #include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Timer/Timer.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/structures/List.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/math/C4DPoint.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/math/C3DPoint.h"
 
 template <typename cType>
 class HCallback {
@@ -37,6 +38,7 @@ public:
     static HSignal<C4DPoint<uint8_t>> RXSwitchesReady;
     static HSignal<C4DPoint<float>> StearingReady;
     static HSignal<bool> RXConnectionSwitchState;
+    static HSignal<C3DPoint<float>> GyroReady;
     //CHANGE HERE
 };
 
@@ -79,5 +81,28 @@ public:
     void runCallback(C4DPoint<float> val) {OnStearingRead(val);}
     ~HCStearingRead(){}
 };
+
+HSignal<C3DPoint<float>> Signals::GyroReady;
+class HCGyroRead: public HCallback<C3DPoint<float>> {
+protected:
+    virtual void OnGyroRead(C3DPoint<float>)=0;
+    HCGyroRead(){Signals::GyroReady.addCallback(this);}
+public:
+    void runCallback(C3DPoint<float> val) {OnGyroRead(val);}
+    ~HCGyroRead(){}
+};
+
+/*template:
+HSignal<Type> Signals::SignalName;
+class objectName: public HCallback<Type> {
+protected:
+    virtual void funcName(Type)=0;
+    objectName(){Signals::SignalName.addCallback(this);}
+public:
+    void runCallback(Type val) {funcName(val);}
+    ~objectName(){}
+};
+*/
+
 
 #endif
