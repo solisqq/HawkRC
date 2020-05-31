@@ -16,6 +16,9 @@ public:
     };
     Node *front = nullptr, *back = nullptr;
     List(){}
+    List(const List<Type>& v) {
+        for(typename List<Type>::Node *it=v.top(); it!=nullptr; it=it->next) pushBack(it->val);
+    }
     ~List() {
         Node* currentNode = this->front;
         while(currentNode) {
@@ -143,7 +146,7 @@ public:
     }
     Type getFront() {return front->val; }
     Type getBack() {return last->val; }
-    Node* top() { return front; }
+    Node* top() const { return front; }
     Node* last() { return back; }
     void Union(List<Type> list) {
         if(front==nullptr) {

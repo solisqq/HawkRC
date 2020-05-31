@@ -11,6 +11,11 @@ public:
 	Type value;
 	FilterableValue(){}
 	List<Filter<Type>*> filters;
+	~FilterableValue(){
+		for(typename List<Filter<Type>*>::Node *it = filters.front; it!=nullptr; it=it->next) 
+			delete it->val;
+		
+	}
 	void update(Type val) {
 		if(filters.count()==0) {
 			value = val;

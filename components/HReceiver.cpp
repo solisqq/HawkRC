@@ -32,6 +32,7 @@ void HReceiver::work() {
         )
     );
     Signals::RXAxisReady.emit(C4DPoint<int8_t>(values[0],values[1],values[2],values[3]));
+    rxSerial.println("FC ON");
 }
 
 uint8_t HReceiver::getSwitchStateByValue(int8_t val, bool threeStates) {

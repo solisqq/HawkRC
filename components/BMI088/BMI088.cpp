@@ -41,7 +41,7 @@ void BMI088::initialize(void)
     setAccOutputDataRate(ODR_100);
     setAccPoweMode(ACC_ACTIVE);
     
-    setGyroScaleRange(RANGE_2000);
+    setGyroScaleRange(RANGE_500);
     setGyroOutputDataRate(ODR_2000_BW_230);
     setGyroPoweMode(GYRO_NORMAL);
 }

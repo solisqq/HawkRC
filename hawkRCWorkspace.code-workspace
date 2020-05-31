@@ -13,7 +13,15 @@
 			"ostream": "cpp",
 			"xstring": "cpp",
 			"vector": "cpp",
-			"xutility": "cpp"
+			"xutility": "cpp",
+			"cmath": "cpp",
+			"list": "cpp",
+			"unordered_map": "cpp",
+			"xhash": "cpp",
+			"xiosbase": "cpp",
+			"xlocnum": "cpp",
+			"xmemory": "cpp",
+			"*.rh": "cpp"
 		}
 	}
 }

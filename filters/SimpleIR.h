@@ -10,8 +10,9 @@ private:
     float low=0.0;
     float high=0.0;
     bool initialized=false;
+    float strength;
 public:
-    SimpleIR(float strength) {
+    SimpleIR(float _strength):strength(_strength) {
         CalcStr(strength);
     }
     virtual void update(Type newVal) {
@@ -25,6 +26,9 @@ public:
     void CalcStr(float strength) {
         low = 1.0 - strength;
         high = strength;
+    }
+    virtual Filter<Type>* clone() const {
+        return new SimpleIR<Type>(strength);
     }
 };
 

@@ -30,6 +30,9 @@ public:
         }
         Filter<Type>::filtered = (((newVal-minVal)*rangeMap)/rangeVal)+minMap;
     }
+    virtual Filter<Type>* clone() const {
+        return new Mapper<Type>(maxVal, minVal, minMap, maxMap);
+    }
 private:
     void calibrate() {
         rangeVal = maxVal-minVal;

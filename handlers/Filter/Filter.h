@@ -18,6 +18,7 @@ public:
 		list.pushBack(b);
 		return list;
 	}
+	virtual Filter* clone() const = 0;
 };
 
 

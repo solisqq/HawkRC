@@ -39,6 +39,7 @@ public:
     static HSignal<C4DPoint<float>> StearingReady;
     static HSignal<bool> RXConnectionSwitchState;
     static HSignal<C3DPoint<float>> GyroReady;
+    static HSignal<C3DPoint<float>> AccReady;
     //CHANGE HERE
 };
 
@@ -90,6 +91,16 @@ protected:
 public:
     void runCallback(C3DPoint<float> val) {OnGyroRead(val);}
     ~HCGyroRead(){}
+};
+
+HSignal<C3DPoint<float>> Signals::AccReady;
+class HCAccRead: public HCallback<C3DPoint<float>> {
+protected:
+    virtual void OnAccRead(C3DPoint<float>)=0;
+    HCAccRead(){Signals::AccReady.addCallback(this);}
+public:
+    void runCallback(C3DPoint<float> val) {OnAccRead(val);}
+    ~HCAccRead(){}
 };
 
 /*template:

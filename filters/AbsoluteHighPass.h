@@ -21,6 +21,9 @@ public:
             return;
         Filter<Type>::filtered = newVal; 
     }
+    virtual Filter<Type>* clone() const {
+        return new AbsoluteHighPass<Type>(newVal);
+    }
 };
 
 #endif

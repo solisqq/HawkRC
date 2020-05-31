@@ -9,13 +9,17 @@
 template<class Type>
 class ButterworthLP: public Filter<Type> {
 	Iir::Butterworth::LowPass<Butterworth_ORDER> bworth;
+    float frequency=0, cutOff=0;
 public:
-	ButterworthLP(float freq, float cutoff) {
+	ButterworthLP(float freq, float cutoff):frequency(freq), cutOff(cutoff) {
 		bworth.setup(Butterworth_ORDER, freq, cutoff);
     }
 
     virtual void update(Type newVal) {
         Filter<Type>::filtered = bworth.filter(static_cast<double>(newVal));
+    }
+    virtual Filter<Type>* clone() const {
+        return new ButterworthLP<Type>(frequency,cutOff);
     }
 };
 

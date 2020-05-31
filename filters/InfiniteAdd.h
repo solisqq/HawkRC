@@ -12,6 +12,9 @@ private:
 public:
     InfiniteAdd(double _mult): mult(_mult) {Filter<Type>::filtered=0;}
     virtual void update(Type newVal) {Filter<Type>::filtered += newVal*mult;}
+    virtual Filter<Type>* clone() const {
+        return new InfiniteAdd<Type>(mult);
+    }
 };
 
 #endif

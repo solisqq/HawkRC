@@ -1,6 +1,6 @@
 #include "HGyro.h"
 
-HGyro::HGyro(){}
+HGyro::HGyro():values(true){}
 
 void HGyro::init(){
     Wire.begin();
@@ -15,24 +15,44 @@ void HGyro::init(){
         }
         delay(2000);
     }
-    X.addFilter(new ButterworthLP<float>(2000, 40));
-    Y.addFilter(new ButterworthLP<float>(2000, 40));
-    Z.addFilter(new ButterworthLP<float>(2000, 40));
+    calibrate();
+    values.addFilters(new ButterworthLP<float>(2000,40));
 }
 void HGyro::work(){
-    C3DPoint<float> point3D = bmi088.getGyroscope();
-    X.update(point3D.X());
-    Y.update(point3D.Y());
-    Z.update(point3D.Z());
-    Signals::GyroReady.emit(C3DPoint<float>(X.value,Y.value,Z.value));
+    values.updateFilters(bmi088.getGyroscope());
+    Signals::GyroReady.emit(values);
 }
 
 void HGyro::OnGyroRead(C3DPoint<float> gyroData) {
     //Serial.println(gyroData.toString());
 }
 
+void HGyro::calibrate() {
+    C3DPoint<double> sums;
+    C3DPoint<float> prev;
+    prev = bmi088.getGyroscope();
+    delay(10);
+    for(int i=0; i<HSettings::Calibrating::Gyro::precision; i++) {
+        C3DPoint<float> gyroData = bmi088.getGyroscope();
+        C3DPoint<float> motion = gyroData - prev;
+        prev = gyroData;
+        if((abs(motion.X())+abs(motion.Y())+abs(motion.Z()))>HSettings::Calibrating::Gyro::threshold) {
+            Serial.println("Recalibrating...");
+            delay(1000);
+            calibrate();
+            return;
+        }
+        sums = sums + C3DPoint<double>(gyroData.X(), gyroData.Y(), gyroData.Z());
+        delay(1);
+    }
+    sums = sums/HSettings::Calibrating::Gyro::precision;
+    values.addFilter(values.X(), new Offset<float>(sums.X()));
+    values.addFilter(values.Y(), new Offset<float>(sums.Y()));
+    values.addFilter(values.Z(), new Offset<float>(sums.Z()));
+}
+
 String HGyro::toString() {
-    return String(X.value)+" "+String(Y.value)+" "+String(Z.value);
+    return values.toString();
 }
 void HGyro::scanForDevices() {
     while(true){

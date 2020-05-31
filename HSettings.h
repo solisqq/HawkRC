@@ -2,6 +2,13 @@
 #define HSETTINGS_H
 #include "Arduino.h"
 
+/*
+Engines:
+12,14,23,19
+Bat:
+D4
+*/
+
 class HSettings {
 public:
     class Pins {
@@ -32,6 +39,18 @@ public:
             static float axisSmoothing;
             static float yawMult;
         };
+        class IMU {
+            public:
+            static float accStrength; 
+        };
+    };
+    class Calibrating {
+        public:
+        class Gyro {
+        public:
+            static int precision;
+            static float threshold;
+        };
     };
 };
 
@@ -51,6 +70,10 @@ int8_t HSettings::RadioValues::MIN_VAL = -105;
 
 float HSettings::Filtering::Receiver::axisSmoothing = 0.87;
 float HSettings::Filtering::Receiver::yawMult = 0.15;
+int HSettings::Calibrating::Gyro::precision = 6000;
+float HSettings::Calibrating::Gyro::threshold = 10;
+
+float HSettings::Filtering::IMU::accStrength = 0.035;
 
 
 

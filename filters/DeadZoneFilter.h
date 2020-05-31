@@ -19,6 +19,9 @@ public:
         else
             Filter<Type>::filtered = crossPoint;
     }
+    virtual Filter<Type>* clone() const {
+        return new DeadZoneFilter<Type>(crossPoint, maxV, minV);
+    }
 };
 
 #endif
