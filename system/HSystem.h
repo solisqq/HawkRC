@@ -11,6 +11,7 @@ public:
     void addProcess(HProcess *processToAdd, unsigned long frequency, String name) {
         processes.pushBack(processToAdd);
         processToAdd->start(frequency, name);
+        Serial.print(".");
     }
     void operate(){
         for(List<HProcess*>::Node* it=processes.top(); it!=nullptr; it=it->next) {

@@ -40,6 +40,8 @@ public:
     static HSignal<bool> RXConnectionSwitchState;
     static HSignal<C3DPoint<float>> GyroReady;
     static HSignal<C3DPoint<float>> AccReady;
+    static HSignal<C3DPoint<double>> IMUReady;
+    static HSignal<C3DPoint<double>> PIDReady;
     //CHANGE HERE
 };
 
@@ -101,6 +103,26 @@ protected:
 public:
     void runCallback(C3DPoint<float> val) {OnAccRead(val);}
     ~HCAccRead(){}
+};
+
+HSignal<C3DPoint<double>> Signals::IMUReady;
+class HCIMURead: public HCallback<C3DPoint<double>> {
+protected:
+    virtual void OnIMURead(C3DPoint<double>)=0;
+    HCIMURead(){Signals::IMUReady.addCallback(this);}
+public:
+    void runCallback(C3DPoint<double> val) {OnIMURead(val);}
+    ~HCIMURead(){}
+};
+
+HSignal<C3DPoint<double>> Signals::PIDReady;
+class HCPIDRead: public HCallback<C3DPoint<double>> {
+protected:
+    virtual void OnPIDRead(C3DPoint<double>)=0;
+    HCPIDRead(){Signals::PIDReady.addCallback(this);}
+public:
+    void runCallback(C3DPoint<double> val) {OnPIDRead(val);}
+    ~HCPIDRead(){}
 };
 
 /*template:

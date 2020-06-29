@@ -5,7 +5,7 @@ Receiver::Receiver(){}
 void Receiver::init(uint8_t interruptPin, uint8_t RSSIPin) {
     this->RSSI_PIN = RSSIPin;
     pinMode(interruptPin, INPUT_PULLUP);
-    pinMode(RSSI_PIN, INPUT);
+    pinMode(RSSI_PIN, INPUT_PULLUP);
     attachInterrupt(digitalPinToInterrupt(interruptPin), CPPM_ISR, RISING);
     delay(20);
 }

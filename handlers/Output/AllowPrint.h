@@ -4,6 +4,7 @@
 //#include <string>
 class AllowPrint {
     bool state=false;
+    String name = "";
 public:
     AllowPrint():state(false){}
     virtual String toString()=0;
@@ -11,6 +12,9 @@ public:
     void printItem() {
         if(state) Serial.println(toString());
     }
+    void setName(String& cmd) {name = cmd;}
+    String& getName() {return name;}
+    bool isDebugged(){return state;}
 };
 
 #endif

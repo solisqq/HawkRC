@@ -37,12 +37,13 @@ BMI088::BMI088(void)
 
 void BMI088::initialize(void)
 {
+    write8(GYRO, 0x15, 0x80); //interrupts
     setAccScaleRange(RANGE_12G);
     setAccOutputDataRate(ODR_100);
     setAccPoweMode(ACC_ACTIVE);
     
     setGyroScaleRange(RANGE_500);
-    setGyroOutputDataRate(ODR_2000_BW_230);
+    setGyroOutputDataRate(ODR_1000_BW_116);
     setGyroPoweMode(GYRO_NORMAL);
 }
 
@@ -69,6 +70,12 @@ uint8_t BMI088::getAccID(void)
 uint8_t BMI088::getGyroID(void)
 {
     return read8(GYRO, BMI088_GYRO_CHIP_ID);
+}
+
+bool BMI088::isGyroDataReady() {
+    uint8_t data = read8(GYRO, BMI088_GYRO_INT_STAT_1);
+    if(data!=0) return true;
+    return false;
 }
 
 void BMI088::setAccPoweMode(acc_power_type_t mode)
@@ -221,7 +228,7 @@ void BMI088::getGyroscope(float* x, float* y, float* z)
     gx = buf[0] | (buf[1] << 8);
     gy = buf[2] | (buf[3] << 8);
     gz = buf[4] | (buf[5] << 8);
-    
+    //Serial.println(String((int16_t)gx)+" "+String((int16_t)gy)+" "+String((int16_t)gz));
     value = (int16_t)gx;
     *x = gyroRange * value / 32768;
     

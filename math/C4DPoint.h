@@ -12,8 +12,11 @@ class C4DPoint: public AllowPrint {
 public:
     C4DPoint():x(0),y(0),z(0),a(0){}
     C4DPoint(Type x, Type y, Type z, Type a): x(x), y(y), z(z), a(a){}
-    Type X(){return x;}
-    Type Y(){return y;}
+    C4DPoint(Type valForAll): x(valForAll), y(valForAll), z(valForAll), a(valForAll){}
+    Type& X(){return x;}
+    Type& Y(){return y;}
+    Type& Z(){return z;}
+    Type& A(){return a;}
     Type& operator[](int index) {
         if(index<0) return x;
         if(index>3) return a;
@@ -29,6 +32,25 @@ public:
     }
     virtual String toString() {
         return String(x)+", "+String(y)+", "+String(z)+", "+String(a);
+    }
+    C4DPoint<int> toInt() {
+        return C4DPoint<int>(static_cast<int>(x),static_cast<int>(y),static_cast<int>(z),static_cast<int>(a));
+    }
+    C4DPoint<float> toFloat() {
+        return C4DPoint<float>(
+            static_cast<float>(x),
+            static_cast<float>(y),
+            static_cast<float>(z),
+            static_cast<float>(a)
+        );
+    }
+    C4DPoint<double> toDouble() {
+        return C4DPoint<double>(
+            static_cast<double>(x),
+            static_cast<double>(y),
+            static_cast<double>(z),
+            static_cast<double>(a)
+        );
     }
 };
 

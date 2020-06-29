@@ -1,10 +1,11 @@
 #include "HSteering.h"
 HSteering::HSteering(): HCStearingRead(), HCRXAxisRead() {}
 void HSteering::init(){
-    throttle.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing));
+    throttle.addFilter(new Mapper<float>(HSettings::RadioValues::MAX_VAL, HSettings::RadioValues::MIN_VAL, HSettings::EngineValues::START-50, HSettings::EngineValues::MAX-100));
+    throttle.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing-0.1));
 
     yaw.addFilter(new DeadZoneFilter<float>(0, HSettings::RadioValues::DEAD_ZONE, -HSettings::RadioValues::DEAD_ZONE));
-    yaw.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing));
+    yaw.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing-0.1));
     yaw.addFilter(new InfiniteAdd<float>(HSettings::Filtering::Receiver::yawMult));
 
     pitch.addFilter(new DeadZoneFilter<float>(0, HSettings::RadioValues::DEAD_ZONE, -HSettings::RadioValues::DEAD_ZONE));
@@ -26,4 +27,6 @@ void HSteering::OnStearingRead(C4DPoint<float> channels) {
     //Serial.println(channels.toString());
 }
 
-
+String HSteering::toString() {
+    return throttle.toString()+" "+yaw.toString()+" "+pitch.toString()+" "+roll.toString();
+}

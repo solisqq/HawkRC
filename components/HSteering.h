@@ -11,9 +11,10 @@
 #include "C:/Users/kamil/Documents/Programming/HawkRC/filters/InfiniteAdd.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/filters/DeadZoneFilter.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/HSettings.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Output/AllowPrint.h"
 
 
-class HSteering: public HProcess, public HCRXAxisRead, public HCStearingRead {
+class HSteering: public HProcess, public HCRXAxisRead, public HCStearingRead, public AllowPrint  {
     FilterableValue<float> throttle;
     FilterableValue<float> yaw;
     FilterableValue<float> pitch;
@@ -24,6 +25,7 @@ public:
     virtual void work(){}
     virtual void OnRXAxisRead(C4DPoint<int8_t> channels);
     virtual void OnStearingRead(C4DPoint<float> channels);
+    virtual String toString();
 };
 #include "HSteering.cpp"
 

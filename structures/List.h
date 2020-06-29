@@ -125,13 +125,12 @@ public:
         return false;
     }
     void clear() {
-        Node* current = front;
-        while(current->next!=nullptr) {
-            Node *backup = current->next;
-            delete current;
-            current = backup;
+        Node* currentNode = this->front;
+        while(currentNode) {
+            Node* nextNode = currentNode->next;
+            delete currentNode;
+            currentNode = nextNode;
         }
-        delete current;
         Count = 0;
         front = back = nullptr;
     }
@@ -147,7 +146,7 @@ public:
     Type getFront() {return front->val; }
     Type getBack() {return last->val; }
     Node* top() const { return front; }
-    Node* last() { return back; }
+    Node* last() const { return back; }
     void Union(List<Type> list) {
         if(front==nullptr) {
             front = list.front;
@@ -172,6 +171,15 @@ public:
         
         return current->val;
     }
+    /*virtual double calcAvg(int itemsCount=0) {
+        if(itemsCount==0) itemsCount = this->count();
+        if(itemsCount > this->count() || itemsCount==0) {return 0;}
+        int i=0; 
+        for(Node* it = this->last(); i<itemsCount; i++, it=it->prev) {
+            it->val 
+        }
+        
+    }*/
 };
 
 #endif

@@ -18,9 +18,12 @@ void HIMU::init(){
     calibrate();*/
     //values.addFilters(new ButterworthLP<float>(2000,40));
     values.setAll(-9999);
+    state = 1;
 }
 void HIMU::work(){
-
+    if(values.X()==-9999 && values.Y()==-9999 && values.Z()==-9999) return;
+    state = 3;
+    Signals::IMUReady.emit(values);
 }
 
 void HIMU::OnGyroRead(C3DPoint<float> gyroData) {

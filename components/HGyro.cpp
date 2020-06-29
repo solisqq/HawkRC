@@ -3,22 +3,24 @@
 HGyro::HGyro():values(true){}
 
 void HGyro::init(){
-    Wire.begin();
+    Wire.begin(22,21);
     Wire.setClock(400000);
     while(1)
     {
         if(bmi088.isConnection())
         {
             bmi088.initialize();
-            Serial.println("BMI088 is connected");
+            Serial.print("|");
             break;
         }
         delay(2000);
+        Serial.println("BMI088 connection failed.");
     }
     calibrate();
-    values.addFilters(new ButterworthLP<float>(2000,40));
+    values.addFilters(new ButterworthLP<float>(1000,80));
 }
 void HGyro::work(){
+    //if(!bmi088.isGyroDataReady()) return;
     values.updateFilters(bmi088.getGyroscope());
     Signals::GyroReady.emit(values);
 }
@@ -49,6 +51,7 @@ void HGyro::calibrate() {
     values.addFilter(values.X(), new Offset<float>(sums.X()));
     values.addFilter(values.Y(), new Offset<float>(sums.Y()));
     values.addFilter(values.Z(), new Offset<float>(sums.Z()));
+    Serial.print("|");
 }
 
 String HGyro::toString() {

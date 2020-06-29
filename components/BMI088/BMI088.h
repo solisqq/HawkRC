@@ -176,6 +176,7 @@ class BMI088
         void setGyroOutputDataRate(gyro_odr_type_t odr);
         
         void getAcceleration(float* x, float* y, float* z);
+        bool isGyroDataReady();
         C3DPoint<float> getAcceleration();
         float getAccelerationX(void);
         float getAccelerationY(void);

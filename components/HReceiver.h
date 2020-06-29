@@ -14,6 +14,7 @@ class HReceiver: public HProcess {
 public:
     HReceiver();
     virtual void init();
+    HardwareSerial& getSerial();
 protected:
     virtual void work();
 private:

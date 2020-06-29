@@ -4,9 +4,10 @@
 
 #include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Filter/Filter.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/structures/List.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Output/AllowPrint.h"
 
 template <class Type>
-class FilterableValue {
+class FilterableValue: public AllowPrint {
 public:
 	Type value;
 	FilterableValue(){}
@@ -44,6 +45,9 @@ public:
 	}
 	void addFilter(List<Filter<Type>*> filter) {
 		filters.Union(filter);
+	}
+	String toString() {
+		return String(value);
 	}
 };
 

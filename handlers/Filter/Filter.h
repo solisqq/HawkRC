@@ -2,6 +2,9 @@
 #ifndef FILTER_H
 #define FILTER_H
 #define ABSOLUTE_DIFFERENCE(A,B) ((A-B)<0 ? (-(A-B)): (A-B))
+#include "C:/Users/kamil/Documents/Programming/HawkRC/structures/List.h"
+
+
 template <class Type>
 class Filter {
 protected:

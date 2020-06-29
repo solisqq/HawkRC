@@ -83,6 +83,28 @@ public:
     C3DPoint<Type> operator*(const C3DPoint<Type> &mult) {
         return C3DPoint<Type>(x*mult.x,y*mult.y,z*mult.z);
     }
+    Type sumUp() {return x+y+z;}
+    C3DPoint<int> toInt() {
+        return C3DPoint<int>(
+            static_cast<int>(x),
+            static_cast<int>(y),
+            static_cast<int>(z)
+        );
+    }
+    C3DPoint<float> toFloat() {
+        return C3DPoint<float>(
+            static_cast<float>(x),
+            static_cast<float>(y),
+            static_cast<float>(z)
+        );
+    }
+    C3DPoint<double> toDouble() {
+        return C3DPoint<double>(
+            static_cast<double>(x),
+            static_cast<double>(y),
+            static_cast<double>(z)
+        );
+    }
 };
 
 #endif

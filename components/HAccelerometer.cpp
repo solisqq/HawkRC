@@ -14,5 +14,5 @@ void HAccelerometer::work(){
 void HAccelerometer::OnAccRead(C3DPoint<float> data){
     //Serial.println(data.toString());
 }
-String HAccelerometer::toString(){}
+String HAccelerometer::toString(){ return "";}
 void HAccelerometer::calibrate(){}
