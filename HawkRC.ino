@@ -26,7 +26,7 @@ MSTimer sendDataToVisualizer_Timer;
 
 void setup(){
     Serial.begin(250000);
-    Serial.print("{");
+    Serial.print("INIT{");
     hsystem.addProcess(&rx, 100, "Receiver");
     hsystem.addProcess(&steering, 50, "Steering");
     hsystem.addProcess(&gyroscope, 1000, "Gyro");
@@ -36,6 +36,11 @@ void setup(){
     hsystem.addProcess(&pid, 1000, "PID");
     hsystem.addProcess(&battery, 100, "Battery");
     hsystem.addProcess(&controller, 500, "Controller");
+    hsystem.addProcess(&settings, 10, "Settings");
+    Serial.println("}");
+
+    Serial.println("SETTINGS{");
+    Serial.print(settings.walk());
     Serial.println("}");
 
     //debugger.addPrintable(&rx, "rx");

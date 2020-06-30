@@ -4,20 +4,21 @@
 #include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Output/AllowPrint.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Filter/FilterableType.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/structures/List.h"
+#include "C:/Users/kamil/Documents/Programming/HawkRC/HSettingsInterface.h"
 
 template<class Type>
-class C3DPoint: public AllowPrint, public FilterableType<Type> {
+class C3DPoint: public SETUP::BY_STRING_EDITABLE, public FilterableType<Type> {
     Type x;
     Type y;
     Type z;
 public:
-    C3DPoint(bool filterable=false):x(0),y(0),z(0){
+    C3DPoint(bool filterable=false):x(0),y(0),z(0), SETUP::BY_STRING_EDITABLE("", nullptr){
         if(!filterable) return;
         FilterableType<Type>::addValueReference(x);
         FilterableType<Type>::addValueReference(y);
         FilterableType<Type>::addValueReference(z);
     }
-    C3DPoint(Type x, Type y, Type z, bool filterable=false): x(x), y(y), z(z){
+    C3DPoint(Type x, Type y, Type z, bool filterable=false, String name="", SETUP::HSettingsCategory* parent=nullptr): x(x), y(y), z(z), SETUP::BY_STRING_EDITABLE(name, parent) {
         if(!filterable) return;
         FilterableType<Type>::addValueReference(x);
         FilterableType<Type>::addValueReference(y);
@@ -40,8 +41,19 @@ public:
             case 2: return z;
         }
     }
+    Type& at(int index) {
+        if(index<0) return x;
+        if(index>2) return z;
+        switch(index) {
+            case 0: return x;
+            break;
+            case 1: return y;
+            break;
+            case 2: return z;
+        }
+    }
     virtual String toString() {
-        return String(x)+" "+String(y)+" "+String(z);
+        return String(x)+","+String(y)+","+String(z);
     }
     void updateFilters(C3DPoint<Type> updateVal) {
         FilterableType<Type>::_updateFilters(updateVal.toList());
@@ -104,6 +116,20 @@ public:
             static_cast<double>(y),
             static_cast<double>(z)
         );
+    }
+    void setByString(const String& valueInString) override {
+        
+        List<String> splited = UTILS::split(valueInString,',');
+        
+        if(splited.count()!=3) return;
+
+        double result[3];
+        for(int i=0; i<3; i++) {
+            result[i] = splited[i].toDouble();
+            if(splited[i]=="0" || result[i]!=0) 
+                at(i)=result[i];
+        }
+        //Serial.println(splited[0]+" "+splited[1]+" "+splited[2]);
     }
 };
 

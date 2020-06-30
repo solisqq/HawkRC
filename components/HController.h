@@ -4,7 +4,6 @@
 #include "C:/Users/kamil/Documents/Programming/HawkRC/system/HCallbacks.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/structures/List.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/math/C3DPoint.h"
-#include "C:/Users/kamil/Documents/Programming/HawkRC/HSettings.h"
 #include "C:/Users/kamil/Documents/Programming/HawkRC/handlers/Output/AllowPrint.h"
 #include "HState.h"
 #include "states/StateIdle.h"

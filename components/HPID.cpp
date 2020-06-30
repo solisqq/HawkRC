@@ -34,25 +34,26 @@ void HPID::OnIMURead(C3DPoint<double> currentAngles){
         )
     );*/
 
-    Proportional = cerror * HSettings::PID::P;
-    Integral = Integral + ((cerror*deltaTime)*HSettings::PID::I);
-    Derivative = ((cerror-prevError)/deltaTime) * HSettings::PID::D;
+    Proportional = cerror * settings.pid.P;
+    Integral = Integral + ((cerror*deltaTime)*settings.pid.I);
+    Derivative = ((cerror-prevError)/deltaTime) * settings.pid.D;
 
     for(int i=0; i<3; i++) {
-        if(Integral[i]>HSettings::PID::PID_LIMITS.Y()) 
-            Integral[i] = HSettings::PID::PID_LIMITS.Y();
-        else if(Integral[i]<-HSettings::PID::PID_LIMITS.Y())
-            Integral[i] = -HSettings::PID::PID_LIMITS.Y();
+        
+        if(Integral[i]>settings.pid.Limits.Y()) 
+            Integral[i] = settings.pid.Limits.Y();
+        else if(Integral[i]<-settings.pid.Limits.Y())
+            Integral[i] = -settings.pid.Limits.Y();
 
-        if(Proportional[i]>HSettings::PID::PID_LIMITS.X()) 
-            Proportional[i] = HSettings::PID::PID_LIMITS.X();
-        else if(Proportional[i]<-HSettings::PID::PID_LIMITS.X())
-            Proportional[i] = -HSettings::PID::PID_LIMITS.X();
+        if(Proportional[i]>settings.pid.Limits.X()) 
+            Proportional[i] = settings.pid.Limits.X();
+        else if(Proportional[i]<-settings.pid.Limits.X())
+            Proportional[i] = -settings.pid.Limits.X();
 
-        if(Derivative[i]>HSettings::PID::PID_LIMITS.Z()) 
-            Derivative[i] = HSettings::PID::PID_LIMITS.Z();
-        else if(Derivative[i]<-HSettings::PID::PID_LIMITS.Z())
-            Derivative[i] = -HSettings::PID::PID_LIMITS.Z();
+        if(Derivative[i]>settings.pid.Limits.Z()) 
+            Derivative[i] = settings.pid.Limits.Z();
+        else if(Derivative[i]<-settings.pid.Limits.Z())
+            Derivative[i] = -settings.pid.Limits.Z();
     }
 
     values = C3DPoint<double>(
@@ -60,12 +61,11 @@ void HPID::OnIMURead(C3DPoint<double> currentAngles){
         Proportional.Y()+Integral.Y()+Derivative.Y(),
         Proportional.Z()+Integral.Z()+Derivative.Z()
     );
-
     for(int i=0; i<3; i++) {
-        if(values[i]>HSettings::PID::OVERALL_LIMIT) 
-            values[i] = HSettings::PID::OVERALL_LIMIT;
-        else if(values[i]<-HSettings::PID::OVERALL_LIMIT)
-            values[i] = -HSettings::PID::OVERALL_LIMIT;
+        if(values[i]>settings.pid.OverallLimits.get()) 
+            values[i] = settings.pid.OverallLimits.get();
+        else if(values[i]<-settings.pid.OverallLimits.get())
+            values[i] = -settings.pid.OverallLimits.get();
     }
 
     Signals::PIDReady.emit(values);

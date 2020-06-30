@@ -18,7 +18,7 @@ public:
     StateFlying() {}
     virtual void init(Engines &engines) {
         PID_values.clear();
-        engines.SetSpeedAll(HSettings::EngineValues::START);
+        engines.SetSpeedAll(settings.engineValues.STARTV.get());
     }
     virtual void keep(Engines &engines) {
         C3DPoint<float> avgPid(0);

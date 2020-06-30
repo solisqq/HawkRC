@@ -46,8 +46,8 @@ void HIMU::OnAccRead(C3DPoint<float> accData) {
         values.Z() = accData.Z();
         return;
     }
-    values.X() = values.X()*(1.0-HSettings::Filtering::IMU::accStrength) + (accData.X()*HSettings::Filtering::IMU::accStrength);
-    values.Y() = values.Y()*(1.0-HSettings::Filtering::IMU::accStrength) + (accData.Y()*HSettings::Filtering::IMU::accStrength);
+    values.X() = values.X()*(1.0-settings.filtering.imu.accStrength.get()) + (accData.X()*settings.filtering.imu.accStrength.get());
+    values.Y() = values.Y()*(1.0-settings.filtering.imu.accStrength.get()) + (accData.Y()*settings.filtering.imu.accStrength.get());
 }
 String HIMU::toString() {
     return values.toString();

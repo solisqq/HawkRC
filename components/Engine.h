@@ -8,29 +8,29 @@ int channelPinAvailable = 2;
 
 class Engine : public AllowPrint {
 public:
-	int pinID, speed=HSettings::EngineValues::MIN;
+	int pinID, speed=settings.engineValues.MINV.get(); 
 	int myChannel;
 	Engine() {}
 	void Init(int pin) {
 		pinID = pin;
 		myChannel = channelPinAvailable;
-		ledcSetup(myChannel, HSettings::EngineValues::PWMFreq, 11);
+		ledcSetup(myChannel, settings.engineValues.PWMFreq.get(), 11);
 		ledcAttachPin(pin, myChannel);
 		channelPinAvailable++;
-		SetSpeed(HSettings::EngineValues::MIN);
+		SetSpeed(settings.engineValues.MINV.get());
 	}
 	void SetSpeed(int newSpeed) {
-		if(newSpeed<HSettings::EngineValues::MIN) 
-			speed = HSettings::EngineValues::MIN;
-		else if(newSpeed>HSettings::EngineValues::MAX)
-			speed = HSettings::EngineValues::MAX;
+		if(newSpeed<settings.engineValues.MINV.get()) 
+			speed = settings.engineValues.MINV.get();
+		else if(newSpeed>settings.engineValues.MAXV.get())
+			speed = settings.engineValues.MAXV.get();
 		else
 			speed=newSpeed;
 		
 		ledcWrite(myChannel,speed);
 	}
 	void Stop() {
-		SetSpeed(HSettings::EngineValues::MIN);
+		SetSpeed(settings.engineValues.MINV.get());
 	}
 	virtual String toString() {
 		return static_cast<String>(speed);

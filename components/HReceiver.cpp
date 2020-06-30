@@ -1,7 +1,7 @@
 #include "HReceiver.H"
 HReceiver::HReceiver():rxSerial(1){}
 void HReceiver::init() {
-    rxSerial.begin(115200, SERIAL_8N1, HSettings::Pins::Receiver::RX, HSettings::Pins::Receiver::TX);//tu skończone
+    rxSerial.begin(115200, SERIAL_8N1, settings.pins.receiver.RX.get(), settings.pins.receiver.TX.get());//tu skończone
     rxSerial.println("FC ON");
     Signals::RXConnectionSwitchState.emit(false);
 }
@@ -23,12 +23,12 @@ void HReceiver::work() {
     if(values.count()<9) {
         return;
     }
-    if(values[8]<HSettings::RadioValues::LOW_RSI_SIGNAL && Signals::RXConnectionSwitchState.getValue()==true) {
+    if(values[8]<settings.radioValues.lowRSI.get() && Signals::RXConnectionSwitchState.getValue()==true) {
         Signals::RXConnectionSwitchState.emit(false);
         return;
     }
     if(Signals::RXConnectionSwitchState.getValue()==false) {
-        if(static_cast<uint8_t>(values[8])>HSettings::RadioValues::LOW_RSI_SIGNAL && static_cast<uint8_t>(values[8])<245) 
+        if(static_cast<uint8_t>(values[8])>settings.radioValues.lowRSI.get() && static_cast<uint8_t>(values[8])<245) 
             Signals::RXConnectionSwitchState.emit(true);
         else 
             return;
@@ -44,9 +44,9 @@ void HReceiver::work() {
 }
 
 uint8_t HReceiver::getSwitchStateByValue(int8_t val, bool threeStates) {
-    if(val<=HSettings::RadioValues::LOW_STATE) return 0;
-    if(threeStates && val<=HSettings::RadioValues::MID_HIGH_STATE && val>=HSettings::RadioValues::MID_LOW_STATE) return 1;
-    if(val>=HSettings::RadioValues::HIGH_STATE)
+    if(val<=settings.radioValues.lowState.get()) return 0;
+    if(threeStates && val<=settings.radioValues.midHighState.get() && val>=settings.radioValues.midLowState.get()) return 1;
+    if(val>=settings.radioValues.highState.get())
         if(threeStates)
             return 2;
 

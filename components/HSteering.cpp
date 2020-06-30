@@ -1,20 +1,20 @@
 #include "HSteering.h"
 HSteering::HSteering(): HCStearingRead(), HCRXAxisRead() {}
 void HSteering::init(){
-    throttle.addFilter(new Mapper<float>(HSettings::RadioValues::MAX_VAL, HSettings::RadioValues::MIN_VAL, HSettings::EngineValues::START-50, HSettings::EngineValues::MAX-100));
-    throttle.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing-0.1));
+    throttle.addFilter(new Mapper<float>(settings.radioValues.maxVal.get(), settings.radioValues.minVal.get(), settings.engineValues.STARTV.get()-50, settings.engineValues.MAXV.get()-100));
+    throttle.addFilter(new SimpleIR<float>(settings.filtering.receiver.axisSmoothing.get()-0.1));
 
-    yaw.addFilter(new DeadZoneFilter<float>(0, HSettings::RadioValues::DEAD_ZONE, -HSettings::RadioValues::DEAD_ZONE));
-    yaw.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing-0.1));
-    yaw.addFilter(new InfiniteAdd<float>(HSettings::Filtering::Receiver::yawMult));
+    yaw.addFilter(new DeadZoneFilter<float>(0, settings.radioValues.deadZone.get(), -settings.radioValues.deadZone.get()));
+    yaw.addFilter(new SimpleIR<float>(settings.filtering.receiver.axisSmoothing.get()-0.1));
+    yaw.addFilter(new InfiniteAdd<float>(settings.filtering.receiver.yawMult.get()));
 
-    pitch.addFilter(new DeadZoneFilter<float>(0, HSettings::RadioValues::DEAD_ZONE, -HSettings::RadioValues::DEAD_ZONE));
-    pitch.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing));
-    pitch.addFilter(new Mapper<float>(HSettings::RadioValues::MAX_VAL, HSettings::RadioValues::MIN_VAL, -25, 25));
+    pitch.addFilter(new DeadZoneFilter<float>(0, settings.radioValues.deadZone.get(), -settings.radioValues.deadZone.get()));
+    pitch.addFilter(new SimpleIR<float>(settings.filtering.receiver.axisSmoothing.get()));
+    pitch.addFilter(new Mapper<float>(settings.radioValues.maxVal.get(), settings.radioValues.minVal.get(), -25, 25));
 
-    roll.addFilter(new DeadZoneFilter<float>(0, HSettings::RadioValues::DEAD_ZONE, -HSettings::RadioValues::DEAD_ZONE));
-    roll.addFilter(new SimpleIR<float>(HSettings::Filtering::Receiver::axisSmoothing));
-    roll.addFilter(new Mapper<float>(HSettings::RadioValues::MAX_VAL, HSettings::RadioValues::MIN_VAL, -25, 25));
+    roll.addFilter(new DeadZoneFilter<float>(0, settings.radioValues.deadZone.get(), -settings.radioValues.deadZone.get()));
+    roll.addFilter(new SimpleIR<float>(settings.filtering.receiver.axisSmoothing.get()));
+    roll.addFilter(new Mapper<float>(settings.radioValues.maxVal.get(), settings.radioValues.minVal.get(), -25, 25));
 }
 void HSteering::OnRXAxisRead(C4DPoint<int8_t> channels){
     throttle.update(static_cast<float>(channels[0]));

@@ -11,10 +11,10 @@ public:
 	Engine frontLeft, frontRight, backLeft, backRight;
 	Engines() {}
 	void Init() {
-		frontLeft.Init(HSettings::Pins::Engines::frontLeft);
-        frontRight.Init(HSettings::Pins::Engines::frontRight);
-        backLeft.Init(HSettings::Pins::Engines::backLeft);
-        backRight.Init(HSettings::Pins::Engines::backRight);
+		frontLeft.Init(settings.pins.engines.frontLeft.get());
+        frontRight.Init(settings.pins.engines.frontRight.get());
+        backLeft.Init(settings.pins.engines.backLeft.get());
+        backRight.Init(settings.pins.engines.backRight.get());
 	}
 	void SetSpeedAll(C4DPoint<int>& values) {
         SetSpeedAll(values.X(),values.Y(),values.Z(),values.A());
@@ -29,7 +29,7 @@ public:
         backRight.SetSpeed(backRightSpeed);
 	}
 	void StopAll() {
-		SetSpeedAll(HSettings::EngineValues::MIN);
+		SetSpeedAll(settings.engineValues.MINV.get());
 	}
 	virtual String toString() {
 		return frontLeft.toString()+" "+frontRight.toString()+" "+backLeft.toString()+" "+backRight.toString();

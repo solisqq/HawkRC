@@ -10,11 +10,11 @@ void HGyro::init(){
         if(bmi088.isConnection())
         {
             bmi088.initialize();
-            Serial.print("|");
+            Serial.print("$");
             break;
         }
         delay(2000);
-        Serial.println("BMI088 connection failed.");
+        Serial.print("!");
     }
     calibrate();
     values.addFilters(new ButterworthLP<float>(1000,80));
@@ -34,12 +34,12 @@ void HGyro::calibrate() {
     C3DPoint<float> prev;
     prev = bmi088.getGyroscope();
     delay(10);
-    for(int i=0; i<HSettings::Calibrating::Gyro::precision; i++) {
+    for(int i=0; i<settings.calibrating.gyro.precision.get(); i++) {
         C3DPoint<float> gyroData = bmi088.getGyroscope();
         C3DPoint<float> motion = gyroData - prev;
         prev = gyroData;
-        if((abs(motion.X())+abs(motion.Y())+abs(motion.Z()))>HSettings::Calibrating::Gyro::threshold) {
-            Serial.println("Recalibrating...");
+        if((abs(motion.X())+abs(motion.Y())+abs(motion.Z()))>settings.calibrating.gyro.threshold.get()) {
+            Serial.print("!");
             delay(1000);
             calibrate();
             return;
@@ -47,11 +47,11 @@ void HGyro::calibrate() {
         sums = sums + C3DPoint<double>(gyroData.X(), gyroData.Y(), gyroData.Z());
         delay(1);
     }
-    sums = sums/HSettings::Calibrating::Gyro::precision;
+    sums = sums/settings.calibrating.gyro.precision.get();
     values.addFilter(values.X(), new Offset<float>(sums.X()));
     values.addFilter(values.Y(), new Offset<float>(sums.Y()));
     values.addFilter(values.Z(), new Offset<float>(sums.Z()));
-    Serial.print("|");
+    Serial.print("$");
 }
 
 String HGyro::toString() {

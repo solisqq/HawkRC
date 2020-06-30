@@ -3,11 +3,11 @@
 HBattery::HBattery(){
 }
 void HBattery::init(){
-    pinMode(HSettings::Pins::Battery, INPUT_PULLDOWN);
+    pinMode(settings.pins.battery.get(), INPUT_PULLDOWN);
     batteryLevel.addFilter(new SimpleIR<float>(0.99));
 }
 void HBattery::work(){
-    int8_t val = analogRead(HSettings::Pins::Battery);
+    int8_t val = analogRead(settings.pins.battery.get());
     //val = val*1.3;
     if(val<-126) val = -126;
     else if(val>126) val = 126;
