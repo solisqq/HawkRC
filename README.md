@@ -1,5 +1,6 @@
 # HawkRC
-HawkRC (old: FC_FIN) - flight controller for quadcopter with object oriented features.
+### Flight controller for quadcopter based on ESP32
+### Hardware:
 - NodeMCU esp32
 - MPU9250 (GY-91)
 - Atmega 328
@@ -7,8 +8,17 @@ HawkRC (old: FC_FIN) - flight controller for quadcopter with object oriented fea
 - 5V Pololu stepdown (up to 20V) voltage regulator
 - I2C 0.96" OLED display
 - Voltage divider for 3-4S input (pin 4)
+- 
+### Features:
+- 8kHz gyro loop, 1kHz PID loop
+- Easy in use filter interface
+- Flexible debugger
+- Complementary filter with auto-adjustable gains
+- Compatible with OneShot125 ESCs
+- Command system
+- Configuration saved in FLASH editable via SerialPort and dedicated application
 
-Short description:
+### Short description:
 
 HSystem and HProcess allow to run task at certain frequency:
 ```cpp
@@ -41,3 +51,22 @@ String HIMU::toString() {
 ```
 This way we can receive variable 'values' (converted to String) in SerialPort just by sending '/imu' (3rd parameter of addProcess).
  
+### Filtering/Signal processing:
+If you want to process value which is being continuously updated you have to initialize it as template FilterableValue:
+
+`FilterableValue<float> gyroscope;`
+
+and add any filter to its list:
+
+`gyroscope.addFilter(new SimpleIR<float>(filter_dump_strength));`
+
+then when you want to update gyroscope by new value:
+
+`gyroscope.update(newValue);`
+
+Notice that update method will process new value by all enlisted filters. Order of adding is very important. Filters will run one after another passing processed values beetwen each other so:
+```cpp
+gyroscope.addFilter(new ButterworthLP<float>(data_rate_freq, cut_off_freq));
+gyroscope.addFilter(new SimpleIR<float>(filter_dump_strength));
+```
+this example will run Butterworth low pass filter on new value and pass processed value to SimpleIR filter so it can processed it further. 
